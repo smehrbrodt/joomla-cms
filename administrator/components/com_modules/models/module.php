@@ -994,17 +994,20 @@ class ModulesModelModule extends JModelAdmin
 			{
 				// Get the sign of the number.
 				$sign = $assignment < 0 ? -1 : 1;
+				
+				//Show also on subpages?
+				$include_submenus = $assignment == 2 ? 1 : 0;
 
 				// Preprocess the assigned array.
 				$tuples = array();
 
 				foreach ($data['assigned'] as &$pk)
 				{
-					$tuples[] = '(' . (int) $table->id . ',' . (int) $pk * $sign . ')';
+					$tuples[] = '(' . (int) $table->id . ',' . (int) $pk * $sign . ',' . $include_submenus . ')';
 				}
 
 				$this->_db->setQuery(
-					'INSERT INTO #__modules_menu (moduleid, menuid) VALUES ' .
+					'INSERT INTO #__modules_menu (moduleid, menuid, include_submenus) VALUES ' .
 					implode(',', $tuples)
 				);
 

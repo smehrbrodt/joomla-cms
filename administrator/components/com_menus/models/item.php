@@ -776,7 +776,9 @@ class MenusModelItem extends JModelAdmin
 		//sqlsrv changes for modulelink to menu manager
 		$query->select('a.id, a.title, a.position, a.published, map.menuid')
 			->from('#__modules AS a')
-			->join('LEFT', sprintf('#__modules_menu AS map ON map.moduleid = a.id AND map.menuid IN (0, %1$d, -%1$d)', $this->getState('item.id')))
+			->join('LEFT', sprintf('#__modules_menu AS map ON map.moduleid = a.id AND map.menuid IN (0, %1$d, -%1$d)'.
+								   'OR map.menuid IN (SELECT menu.id FROM #__menu AS menu WHERE menu.parent_id IN (%1$d, -%1$d))',
+								   $this->getState('item.id')))
 			->select('(SELECT COUNT(*) FROM #__modules_menu WHERE moduleid = a.id AND menuid < 0) AS ' . $db->quoteName('except'));
 
 		// Join on the asset groups table.
