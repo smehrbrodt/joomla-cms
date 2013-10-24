@@ -226,6 +226,7 @@ abstract class ModulesHelper
 		if ($clientId == 0)
 		{
 			$options[] = JHtml::_('select.option', '1', 'COM_MODULES_OPTION_MENU_INCLUDE');
+			$options[] = JHtml::_('select.option', '2', 'COM_MODULES_OPTION_MENU_INCLUDE_SUBPAGES');
 			$options[] = JHtml::_('select.option', '-1', 'COM_MODULES_OPTION_MENU_EXCLUDE');
 		}
 
